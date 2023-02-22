@@ -26,17 +26,16 @@ static char *findme;
 **  Call this with the string to locate to initialize the table
 */
 
-size_t *init_search(const char *string)
+size_t *init_search(const char *string, size_t *table)
 {
 	size_t i;
-	size_t table[UCHAR_MAX + 1];
 	len = strlen(string);
 	for (i = 0; i <= UCHAR_MAX; i++) /* rdg 10/93 */
 		table[i] = len;
 	for (i = 0; i < len; i++)
 		table[(unsigned char)string[i]] = len - i - 1;
 	findme = (char *)string;
-	return &table;
+	return table;
 }
 
 /*
@@ -81,7 +80,8 @@ void *single_loop(void *arguments)
 {
 	char *here;
 	struct arg_struct *args = arguments;
-	size_t *table = init_search(args->find_strings[args->i]);
+	size_t table[UCHAR_MAX + 1];
+	init_search(args->find_strings[args->i], table);
 	here = strsearch(args->search_strings[args->i], table);
 	printf("\"%s\" is%s in \"%s\"", args->find_strings[args->i],
 		   here ? "" : " not", args->search_strings[args->i]);

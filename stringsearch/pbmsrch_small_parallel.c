@@ -171,7 +171,7 @@ main()
 		args.find_strings = find_strings;
 		args.search_strings = search_strings;
 		args.i = i;
-		pthread_create(&thread, NULL, &single_loop, &args);
+		pthread_create(&thread, NULL, single_loop, &args);
 	}
 
 	return 0;

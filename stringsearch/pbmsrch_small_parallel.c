@@ -72,8 +72,8 @@ char *strsearch(const char *string, size_t *table)
 
 struct arg_struct
 {
-	char *find_strings;
-	char *search_strings;
+	char **find_strings;
+	char **search_strings;
 	int i;
 };
 
@@ -168,8 +168,8 @@ main()
 	{
 		pthread_t thread;
 		struct arg_struct args;
-		args.find_strings = &find_strings;
-		args.search_strings = &search_strings;
+		args.find_strings = find_strings;
+		args.search_strings = search_strings;
 		args.i = i;
 		pthread_create(&thread, NULL, &single_loop, &args);
 	}

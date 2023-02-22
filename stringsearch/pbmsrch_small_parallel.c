@@ -36,7 +36,7 @@ size_t *init_search(const char *string)
 	for (i = 0; i < len; i++)
 		table[(unsigned char)string[i]] = len - i - 1;
 	findme = (char *)string;
-	return table;
+	return &table;
 }
 
 /*
@@ -77,7 +77,7 @@ struct arg_struct
 	int i;
 };
 
-void single_loop(void *arguments)
+void *single_loop(void *arguments)
 {
 	char *here;
 	struct arg_struct *args = arguments;

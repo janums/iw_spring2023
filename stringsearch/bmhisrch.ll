@@ -1,7 +1,7 @@
 ; ModuleID = 'bmhisrch.c'
 source_filename = "bmhisrch.c"
-target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
-target triple = "x86_64-redhat-linux-gnu"
+target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
+target triple = "x86_64-unknown-linux-gnu"
 
 @patlen = internal global i32 0, align 4
 @pat = internal global i8* null, align 8
@@ -9,30 +9,30 @@ target triple = "x86_64-redhat-linux-gnu"
 @skip2 = internal global i32 0, align 4
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define dso_local void @bmhi_init(i8* noundef %0) #0 {
+define dso_local void @bmhi_init(i8*) #0 {
   %2 = alloca i8*, align 8
   %3 = alloca i32, align 4
   %4 = alloca i32, align 4
   store i8* %0, i8** %2, align 8
   %5 = load i8*, i8** %2, align 8
-  %6 = call i64 @strlen(i8* noundef %5) #4
+  %6 = call i64 @strlen(i8* %5) #4
   %7 = trunc i64 %6 to i32
   store i32 %7, i32* @patlen, align 4
   %8 = load i8*, i8** @pat, align 8
   %9 = load i32, i32* @patlen, align 4
   %10 = sext i32 %9 to i64
-  %11 = call i8* @realloc(i8* noundef %8, i64 noundef %10) #5
+  %11 = call i8* @realloc(i8* %8, i64 %10) #5
   store i8* %11, i8** @pat, align 8
   %12 = load i8*, i8** @pat, align 8
   %13 = icmp ne i8* %12, null
   br i1 %13, label %15, label %14
 
 14:                                               ; preds = %1
-  call void @exit(i32 noundef 1) #6
+  call void @exit(i32 1) #6
   unreachable
 
 15:                                               ; preds = %1
-  %16 = call i32 @atexit(void ()* noundef @bhmi_cleanup) #5
+  %16 = call i32 @atexit(void ()* @bhmi_cleanup) #5
   br label %17
 
 17:                                               ; preds = %15
@@ -52,7 +52,7 @@ define dso_local void @bmhi_init(i8* noundef %0) #0 {
   %26 = getelementptr inbounds i8, i8* %23, i64 %25
   %27 = load i8, i8* %26, align 1
   %28 = sext i8 %27 to i32
-  %29 = call i32 @toupper(i32 noundef %28) #4
+  %29 = call i32 @toupper(i32 %28) #4
   %30 = trunc i32 %29 to i8
   %31 = load i8*, i8** @pat, align 8
   %32 = load i32, i32* %3, align 4
@@ -65,7 +65,7 @@ define dso_local void @bmhi_init(i8* noundef %0) #0 {
   %36 = load i32, i32* %3, align 4
   %37 = add nsw i32 %36, 1
   store i32 %37, i32* %3, align 4
-  br label %18, !llvm.loop !4
+  br label %18
 
 38:                                               ; preds = %18
   store i32 0, i32* %3, align 4
@@ -88,7 +88,7 @@ define dso_local void @bmhi_init(i8* noundef %0) #0 {
   %48 = load i32, i32* %3, align 4
   %49 = add nsw i32 %48, 1
   store i32 %49, i32* %3, align 4
-  br label %39, !llvm.loop !6
+  br label %39
 
 50:                                               ; preds = %39
   store i32 0, i32* %3, align 4
@@ -124,7 +124,7 @@ define dso_local void @bmhi_init(i8* noundef %0) #0 {
   %75 = getelementptr inbounds i8, i8* %72, i64 %74
   %76 = load i8, i8* %75, align 1
   %77 = zext i8 %76 to i32
-  %78 = call i32 @tolower(i32 noundef %77) #4
+  %78 = call i32 @tolower(i32 %77) #4
   %79 = sext i32 %78 to i64
   %80 = getelementptr inbounds [256 x i32], [256 x i32]* @skip, i64 0, i64 %79
   store i32 %71, i32* %80, align 4
@@ -134,7 +134,7 @@ define dso_local void @bmhi_init(i8* noundef %0) #0 {
   %82 = load i32, i32* %3, align 4
   %83 = add nsw i32 %82, 1
   store i32 %83, i32* %3, align 4
-  br label %51, !llvm.loop !7
+  br label %51
 
 84:                                               ; preds = %51
   %85 = load i8*, i8** @pat, align 8
@@ -150,7 +150,7 @@ define dso_local void @bmhi_init(i8* noundef %0) #0 {
   %94 = getelementptr inbounds [256 x i32], [256 x i32]* @skip, i64 0, i64 %93
   store i32 32767, i32* %94, align 4
   %95 = load i32, i32* %4, align 4
-  %96 = call i32 @tolower(i32 noundef %95) #4
+  %96 = call i32 @tolower(i32 %95) #4
   %97 = sext i32 %96 to i64
   %98 = getelementptr inbounds [256 x i32], [256 x i32]* @skip, i64 0, i64 %97
   store i32 32767, i32* %98, align 4
@@ -192,39 +192,39 @@ define dso_local void @bmhi_init(i8* noundef %0) #0 {
   %121 = load i32, i32* %3, align 4
   %122 = add nsw i32 %121, 1
   store i32 %122, i32* %3, align 4
-  br label %100, !llvm.loop !8
+  br label %100
 
 123:                                              ; preds = %100
   ret void
 }
 
-; Function Attrs: nounwind readonly willreturn
-declare dso_local i64 @strlen(i8* noundef) #1
+; Function Attrs: nounwind readonly
+declare dso_local i64 @strlen(i8*) #1
 
 ; Function Attrs: nounwind
-declare dso_local i8* @realloc(i8* noundef, i64 noundef) #2
+declare dso_local i8* @realloc(i8*, i64) #2
 
 ; Function Attrs: noreturn nounwind
-declare dso_local void @exit(i32 noundef) #3
+declare dso_local void @exit(i32) #3
 
 ; Function Attrs: nounwind
-declare dso_local i32 @atexit(void ()* noundef) #2
+declare dso_local i32 @atexit(void ()*) #2
 
 ; Function Attrs: noinline nounwind optnone uwtable
 define dso_local void @bhmi_cleanup() #0 {
   %1 = load i8*, i8** @pat, align 8
-  call void @free(i8* noundef %1) #5
+  call void @free(i8* %1) #5
   ret void
 }
 
-; Function Attrs: nounwind readonly willreturn
-declare dso_local i32 @toupper(i32 noundef) #1
+; Function Attrs: nounwind readonly
+declare dso_local i32 @toupper(i32) #1
 
-; Function Attrs: nounwind readonly willreturn
-declare dso_local i32 @tolower(i32 noundef) #1
+; Function Attrs: nounwind readonly
+declare dso_local i32 @tolower(i32) #1
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define dso_local i8* @bmhi_search(i8* noundef %0, i32 noundef %1) #0 {
+define dso_local i8* @bmhi_search(i8*, i32) #0 {
   %3 = alloca i8*, align 8
   %4 = alloca i8*, align 8
   %5 = alloca i32, align 4
@@ -273,7 +273,7 @@ define dso_local i8* @bmhi_search(i8* noundef %0, i32 noundef %1) #0 {
   br i1 %33, label %34, label %35
 
 34:                                               ; preds = %22
-  br label %22, !llvm.loop !9
+  br label %22
 
 35:                                               ; preds = %22
   %36 = load i32, i32* %6, align 4
@@ -316,7 +316,7 @@ define dso_local i8* @bmhi_search(i8* noundef %0, i32 noundef %1) #0 {
   %60 = getelementptr inbounds i8, i8* %57, i64 %59
   %61 = load i8, i8* %60, align 1
   %62 = sext i8 %61 to i32
-  %63 = call i32 @toupper(i32 noundef %62) #4
+  %63 = call i32 @toupper(i32 %62) #4
   %64 = load i8*, i8** @pat, align 8
   %65 = load i32, i32* %7, align 4
   %66 = sext i32 %65 to i64
@@ -331,7 +331,7 @@ define dso_local i8* @bmhi_search(i8* noundef %0, i32 noundef %1) #0 {
   br i1 %72, label %73, label %74
 
 73:                                               ; preds = %71
-  br label %52, !llvm.loop !10
+  br label %52
 
 74:                                               ; preds = %71
   %75 = load i32, i32* %7, align 4
@@ -364,27 +364,18 @@ define dso_local i8* @bmhi_search(i8* noundef %0, i32 noundef %1) #0 {
 }
 
 ; Function Attrs: nounwind
-declare dso_local void @free(i8* noundef) #2
+declare dso_local void @free(i8*) #2
 
-attributes #0 = { noinline nounwind optnone uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #1 = { nounwind readonly willreturn "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #2 = { nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { noreturn nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { nounwind readonly willreturn }
+attributes #0 = { noinline nounwind optnone uwtable "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #1 = { nounwind readonly "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #2 = { nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #3 = { noreturn nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #4 = { nounwind readonly }
 attributes #5 = { nounwind }
 attributes #6 = { noreturn nounwind }
 
-!llvm.module.flags = !{!0, !1, !2}
-!llvm.ident = !{!3}
+!llvm.module.flags = !{!0}
+!llvm.ident = !{!1}
 
 !0 = !{i32 1, !"wchar_size", i32 4}
-!1 = !{i32 7, !"uwtable", i32 1}
-!2 = !{i32 7, !"frame-pointer", i32 2}
-!3 = !{!"clang version 14.0.6 (Red Hat 14.0.6-1.module+el8.7.0+15816+ec020e8f)"}
-!4 = distinct !{!4, !5}
-!5 = !{!"llvm.loop.mustprogress"}
-!6 = distinct !{!6, !5}
-!7 = distinct !{!7, !5}
-!8 = distinct !{!8, !5}
-!9 = distinct !{!9, !5}
-!10 = distinct !{!10, !5}
+!1 = !{!"clang version 9.0.1 (https://github.com/llvm/llvm-project.git c1a0a213378a458fbea1a5c77b315c7dce08fd05)"}

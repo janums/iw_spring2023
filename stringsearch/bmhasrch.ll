@@ -1,16 +1,16 @@
 ; ModuleID = 'bmhasrch.c'
 source_filename = "bmhasrch.c"
-target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
-target triple = "x86_64-redhat-linux-gnu"
+target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
+target triple = "x86_64-unknown-linux-gnu"
 
-@lowervec = dso_local global [256 x i8] c"\00\01\02\03\04\05\06\07\08\09\0A\0B\0C\0D\0E\0F\10\11\12\13\14\15\16\17\18\19\1A\1B\1C\1D\1E\1F !\22#$%&'()*+,-./0123456789:;<=>?@abcdefghijklmnopqrstuvwxyz[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\7Fcueaaaaceeeiiiaae\91\92ooouuyou\9B\9C\9D\9E\9Faiounn\A6\A7\A8\A9\AA\AB\AC\AD\AE\AF\B0\B1\B2\B3\B4\B5\B6\B7\B8\B9\BA\BB\BC\BD\BE\BF\C0\C1\C2\C3\C4\C5\C6\C7\C8\C9\CA\CB\CC\CD\CE\CF\D0\D1\D2\D3\D4\D5\D6\D7\D8\D9\DA\DB\DC\DD\DE\DF\E0\E1\E2\E3\E4\E5\E6\E7\E8\E9\EA\EB\EC\ED\EE\EF\F0\F1\F2\F3\F4\F5\F6\F7\F8\F9\FA\FB\FC\FD\FE\FF", align 16
+@lowervec = dso_local global [256 x i8] c"\00\01\02\03\04\05\06\07\08\09\0A\0B\0C\0D\0E\0F\10\11\12\13\14\15\16\17\18\19\1A\1B\1C\1D\1E\1F !\22#$%&'()*+,-./0123456789:;<=>?@abcdefghijklmnopqrstuvwxyz[\5C]^_`abcdefghijklmnopqrstuvwxyz{|}~\7Fcueaaaaceeeiiiaae\91\92ooouuyou\9B\9C\9D\9E\9Faiounn\A6\A7\A8\A9\AA\AB\AC\AD\AE\AF\B0\B1\B2\B3\B4\B5\B6\B7\B8\B9\BA\BB\BC\BD\BE\BF\C0\C1\C2\C3\C4\C5\C6\C7\C8\C9\CA\CB\CC\CD\CE\CF\D0\D1\D2\D3\D4\D5\D6\D7\D8\D9\DA\DB\DC\DD\DE\DF\E0\E1\E2\E3\E4\E5\E6\E7\E8\E9\EA\EB\EC\ED\EE\EF\F0\F1\F2\F3\F4\F5\F6\F7\F8\F9\FA\FB\FC\FD\FE\FF", align 16
 @pat = internal global i8* null, align 8
 @patlen = internal global i32 0, align 4
 @skip = internal global [256 x i32] zeroinitializer, align 16
 @skip2 = internal global i32 0, align 4
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define dso_local void @bmha_init(i8* noundef %0) #0 {
+define dso_local void @bmha_init(i8*) #0 {
   %2 = alloca i8*, align 8
   %3 = alloca i32, align 4
   %4 = alloca i32, align 4
@@ -18,7 +18,7 @@ define dso_local void @bmha_init(i8* noundef %0) #0 {
   %5 = load i8*, i8** %2, align 8
   store i8* %5, i8** @pat, align 8
   %6 = load i8*, i8** %2, align 8
-  %7 = call i64 @strlen(i8* noundef %6) #2
+  %7 = call i64 @strlen(i8* %6) #2
   %8 = trunc i64 %7 to i32
   store i32 %8, i32* @patlen, align 4
   store i32 0, i32* %3, align 4
@@ -74,7 +74,7 @@ define dso_local void @bmha_init(i8* noundef %0) #0 {
   %42 = load i32, i32* %4, align 4
   %43 = add nsw i32 %42, -1
   store i32 %43, i32* %4, align 4
-  br label %19, !llvm.loop !4
+  br label %19
 
 44:                                               ; preds = %39, %19
   %45 = load i32, i32* %4, align 4
@@ -113,7 +113,7 @@ define dso_local void @bmha_init(i8* noundef %0) #0 {
   %66 = load i32, i32* %3, align 4
   %67 = add nsw i32 %66, 1
   store i32 %67, i32* %3, align 4
-  br label %9, !llvm.loop !6
+  br label %9
 
 68:                                               ; preds = %9
   %69 = load i32, i32* @patlen, align 4
@@ -166,17 +166,17 @@ define dso_local void @bmha_init(i8* noundef %0) #0 {
   %103 = load i32, i32* %3, align 4
   %104 = add nsw i32 %103, 1
   store i32 %104, i32* %3, align 4
-  br label %70, !llvm.loop !7
+  br label %70
 
 105:                                              ; preds = %70
   ret void
 }
 
-; Function Attrs: nounwind readonly willreturn
-declare dso_local i64 @strlen(i8* noundef) #1
+; Function Attrs: nounwind readonly
+declare dso_local i64 @strlen(i8*) #1
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define dso_local i8* @bmha_search(i8* noundef %0, i32 noundef %1) #0 {
+define dso_local i8* @bmha_search(i8*, i32) #0 {
   %3 = alloca i8*, align 8
   %4 = alloca i8*, align 8
   %5 = alloca i32, align 4
@@ -225,7 +225,7 @@ define dso_local i8* @bmha_search(i8* noundef %0, i32 noundef %1) #0 {
   br i1 %33, label %34, label %35
 
 34:                                               ; preds = %22
-  br label %22, !llvm.loop !8
+  br label %22
 
 35:                                               ; preds = %22
   %36 = load i32, i32* %6, align 4
@@ -288,7 +288,7 @@ define dso_local i8* @bmha_search(i8* noundef %0, i32 noundef %1) #0 {
   br i1 %77, label %78, label %79
 
 78:                                               ; preds = %76
-  br label %52, !llvm.loop !9
+  br label %52
 
 79:                                               ; preds = %76
   %80 = load i32, i32* %7, align 4
@@ -320,20 +320,12 @@ define dso_local i8* @bmha_search(i8* noundef %0, i32 noundef %1) #0 {
   ret i8* %92
 }
 
-attributes #0 = { noinline nounwind optnone uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #1 = { nounwind readonly willreturn "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #2 = { nounwind readonly willreturn }
+attributes #0 = { noinline nounwind optnone uwtable "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #1 = { nounwind readonly "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #2 = { nounwind readonly }
 
-!llvm.module.flags = !{!0, !1, !2}
-!llvm.ident = !{!3}
+!llvm.module.flags = !{!0}
+!llvm.ident = !{!1}
 
 !0 = !{i32 1, !"wchar_size", i32 4}
-!1 = !{i32 7, !"uwtable", i32 1}
-!2 = !{i32 7, !"frame-pointer", i32 2}
-!3 = !{!"clang version 14.0.6 (Red Hat 14.0.6-1.module+el8.7.0+15816+ec020e8f)"}
-!4 = distinct !{!4, !5}
-!5 = !{!"llvm.loop.mustprogress"}
-!6 = distinct !{!6, !5}
-!7 = distinct !{!7, !5}
-!8 = distinct !{!8, !5}
-!9 = distinct !{!9, !5}
+!1 = !{!"clang version 9.0.1 (https://github.com/llvm/llvm-project.git c1a0a213378a458fbea1a5c77b315c7dce08fd05)"}

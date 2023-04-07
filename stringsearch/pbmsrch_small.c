@@ -48,13 +48,47 @@ char *strsearch(const char *string)
 	char *here;
 	size_t limit = strlen(string);
 
+	/*
+	one basic idea:
+
+	can you split this while loop into (limit - pos) number of processors?
+	this eliminates the outer while loop --> each processor handles
+	one value of pos, which is bounded by [len-1, limit]
+	then, at this point, you can immediately check:
+
+	if (shift = table[(unsigned char)string[pos]]) > 0 && [compare strings to verify]):
+			return (here)
+	else:
+			return null
+
+	Note: this approach is O(1) if you can parallelize across n = (limit-pos)
+	processors. Otherwise, if you have m processors, it will take O(n/m) time
+	^^ this actually assumes strcmp is constant, which is incorrect
+	this approach, in the worst case, actually takes O(len(findme)*len(string))
+	time, even if you can parallelize across multiple processors. can strcmp()
+	itself be split up more?
+
+	*/
 	while (pos < limit)
 	{
-		while (pos < limit &&
-			   (shift = table[(unsigned char)string[pos]]) > 0)
+		while (pos < limit && (shift = table[(unsigned char)string[pos]]) > 0)
 		{
 			pos += shift;
 		}
+
+		// can you put this whole if statement on another processor? like the linked-list approach
+		/*
+		another idea:
+
+		(refer to the linked-list traversal example in the DSWP paper)
+
+		can you increment pos++ and continue working on one processor while doing these checks
+		on another processor? strncmp takes O(n) time (i think). If the comparison retunrns true,
+		then can the secondary processor use a PRODUCE call to somehow interrupt the work being
+		done on the other processor?
+
+		Note: this approach is likely most performant when we have two processors
+		*/
 		if (0 == shift)
 		{
 			if (0 == strncmp(findme, here = (char *)&string[pos - len + 1], len))

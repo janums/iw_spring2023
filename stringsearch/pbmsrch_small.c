@@ -68,6 +68,7 @@ char *strsearch(const char *string)
 	time, even if you can parallelize across multiple processors. can strcmp()
 	itself be split up more?
 
+	** if you have 2 processors, start pos at: (pos) and ((limit-pos)/2)
 	*/
 	while (pos < limit)
 	{
@@ -102,8 +103,44 @@ char *strsearch(const char *string)
 	return NULL;
 }
 
+/*
+notes from meeting 4/10
+
+These are good parallelization techniques. The optimal technique can depend on what the input looks like-
+
+For example, for a string that looks like "00000.....0000abcdscsdoiffd....dsfjdfk...00000.00000" (basically lettters wrapped by a bunch of zeroes),
+and a substring that looks like "asdkjb", it would make sense to parallelize the inner portion of the string for the string compares
+
+one method of run-time parallelization:
+- split the program up into two sequential threads. after x seconds, split any existing threads into two more threads. repeat until completed.
+this basically parallelizes the heaviest portions of the application.
+
+*/
+
 #include <stdio.h>
 
+/*
+more notes
+
+website: http://13.58.206.207:8050/status
+exec coverage means the percent of time spent in the loop
+covered LP deps = number of loops we can cover with analysis
+total LP deps = LP deps that are still there after static analysis
+so, (total LP deps) - (covered LP deps) is the number of dependences that must run sequentially
+loop speedup = how much improvement is achieved
+P21 = 21 parallel threads
+S-S-S-S-S... = all sequential stages (no parallelism)
+S-P21 = one sequential stage feeds 21 parallel
+P21-S = 21 parallel stages feed one sequential stage, which aggregates
+LLVM is a SSA (single status assignment) --> cannot write r1 = r1+1
+
+to-do 4/10:
+- go through a bunch of loops where we are at 1) nearly 100% coverage and 2) only a few loops left after covering
+- find these such that these left over dependences are NOT function calls (will say something like "call func..."")
+- try to understand what these loops are doing and what you can do to parallelize them
+- we are very very close at parallelizing it -- these are our targets to focus on
+- ** parallelizing one loop means explicitly parallelizing each iteration of that loop
+*/
 main()
 {
 	char *here;

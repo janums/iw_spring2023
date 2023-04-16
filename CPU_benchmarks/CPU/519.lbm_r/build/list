@@ -1,0 +1,2 @@
+build_base_mytest-m64.0000 dir=/u/ziyangx/spec2017-workspace/benchspec/CPU/519.lbm_r/build/build_base_mytest-m64.0000 label=mytest-m64 lock=0 tune=base type=build username=ziyangx
+__END__

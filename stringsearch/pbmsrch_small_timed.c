@@ -164,7 +164,7 @@ main()
     }
 
     printf("[");
-    for (int i = 0; i < 1333; i++)
+    for (int i = 0; i < 57; i++)
     {
         printf("%f, ", times[i]);
     }

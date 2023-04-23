@@ -15,6 +15,7 @@
 #include <stddef.h>
 #include <string.h>
 #include <limits.h>
+#include <time.h>
 
 static size_t table[UCHAR_MAX + 1];
 static size_t len;
@@ -2739,9 +2740,12 @@ main()
                                 "and recycling it for more than its",
                                 "worth But trust me on the sunscreen"};
       int i;
-
+      time_t start_time, end_time;
+      double elapsed_time;
+      double times[1333];
       for (i = 0; find_strings[i]; i++)
       {
+            start_time = clock();
             init_search(find_strings[i]);
             here = strsearch(search_strings[i]);
             printf("\"%s\" is%s in \"%s\"", find_strings[i],
@@ -2749,7 +2753,18 @@ main()
             if (here)
                   printf(" [\"%s\"]", here);
             putchar('\n');
+            end_time = clock();
+            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+            times[i] = elapsed_time;
+            // printf("iteration %d: %f seconds\n", i, elapsed_time);
       }
+
+      printf("[");
+      for (int i = 0; i < 1333; i++)
+      {
+            printf("%f, ", times[i]);
+      }
+      printf("]\n");
 
       return 0;
 }

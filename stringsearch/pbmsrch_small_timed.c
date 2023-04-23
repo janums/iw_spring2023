@@ -159,8 +159,16 @@ main()
         putchar('\n');
         end_time = clock();
         elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-        printf("iteration %d: %f seconds\n", i, elapsed_time);
+        times[i] = elapsed_time;
+        // printf("iteration %d: %f seconds\n", i, elapsed_time);
     }
+
+    printf("[");
+    for (int i = 0; i < 1333; i++)
+    {
+        printf("%f, ", times[i]);
+    }
+    printf("]\n");
 
     return 0;
 }

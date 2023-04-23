@@ -18,7 +18,7 @@ search_large: ${FILE2} Makefile
 	gcc -static ${FILE2} -O3 -o search_large
 
 search_large_timed: ${FILE2} Makefile
-	gcc -static ${FILE2} -O3 -o search_large
+	gcc -static ${FILE2} -O3 -o search_large_timed
 
 clean:
-	rm -rf search_small search_large output*
+	rm -rf search_small search_large search_large_timed search_small_timed search_small_p output*

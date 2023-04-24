@@ -2771,13 +2771,13 @@ main()
 		pthread_create(&thread_arr[i], NULL, single_loop, &args);
 	}
 
-	for (i = 0; i < 1333; i++)
+	for (i = 0; i < 1332; i++)
 	{
 		pthread_join(thread_arr[i], NULL);
 	}
 
 	main_end = clock();
-	elapsed_time = ((double)(main_start - main_end)) / CLOCKS_PER_SEC;
+	elapsed_time = ((double)(main_end - main_start)) / CLOCKS_PER_SEC;
 	printf("(LARGE, PARALLEL) Total run time: %f seconds\n", elapsed_time);
 
 	return 0;

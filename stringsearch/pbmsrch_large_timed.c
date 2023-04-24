@@ -2769,7 +2769,7 @@ main()
             printf("%f, ", times[i]);
       }
       printf("]\n");
-      elapsed_time = ((double)(main_start - main_end)) / CLOCKS_PER_SEC;
+      elapsed_time = ((double)(main_end - main_start)) / CLOCKS_PER_SEC;
       printf("(LARGE, TIMED) Total run time: %f seconds\n", elapsed_time);
 
       return 0;

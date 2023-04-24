@@ -73,6 +73,8 @@ char *strsearch(const char *string)
 
 main()
 {
+      time_t main_start, main_end;
+      main_start = clock();
       char *here;
       char *find_strings[] = {"Kur",
                               "gent",
@@ -2759,12 +2761,16 @@ main()
             // printf("iteration %d: %f seconds\n", i, elapsed_time);
       }
 
+      main_end = clock();
+
       printf("[");
       for (int i = 0; i < 1333; i++)
       {
             printf("%f, ", times[i]);
       }
       printf("]\n");
+      elapsed_time = ((double)(main_start - main_end)) / CLOCKS_PER_SEC;
+      printf("(LARGE, TIMED) Total run time: %f seconds\n", elapsed_time);
 
       return 0;
 }
